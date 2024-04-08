@@ -2,6 +2,7 @@ import boto3
 import json
 import requests
 from botocore.exceptions import ClientError
+from extract_resource_tags import ExtractTags
 import logging
 
 
@@ -117,7 +118,9 @@ class ResourceDetails():
 
     def process_resource_type(self,res_type):
         if res_type == "s3":
-            obj.s3_processing()
+            #obj.s3_processing()
+            ert = ExtractTags()
+            ert.extract_tags("s3")
 
 
     def get_user_defined_tags(self, res_type,bucket,acct_id):
@@ -164,18 +167,4 @@ class ResourceDetails():
 if __name__ == "__main__":
     obj = ResourceDetails()
     obj.process_resource_type("s3")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

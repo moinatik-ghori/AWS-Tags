@@ -1,0 +1,68 @@
+{
+    "s3": {
+        "my-first-bucket-for-tagging-enforcement": [
+            {
+                "Key": "component-component_id",
+                "Value": "S3-user-component-id-A1"
+            }
+        ],
+        "my-first-bucket-for-tagging-enforcement-with-tag": [
+            {
+                "Key": "tag1",
+                "Value": "val1"
+            },
+            {
+                "Key": "system-apm_id",
+                "Value": "S3-system-apm_id-A1"
+            },
+            {
+                "Key": "tag2",
+                "Value": "val2"
+            },
+            {
+                "Key": "tag3",
+                "Value": "val3"
+            },
+            {
+                "Key": "system-support_ag_id",
+                "Value": "IX-system-support_ag_id_A1"
+            },
+            {
+                "Key": "system-support_ag_name",
+                "Value": "IX-system-support_ag_name_A1"
+            },
+            {
+                "Key": "system-change_ag_id",
+                "Value": "IX-system-change_ag_id_A1"
+            },
+            {
+                "Key": "system-name",
+                "Value": "IX-system-name_A1"
+            },
+            {
+                "Key": "TagKey",
+                "Value": "MyFirstTag"
+            },
+            {
+                "Key": "system-lifecycle",
+                "Value": "IX-system-lifecycle_A1"
+            },
+            {
+                "Key": "component-component_id",
+                "Value": "S3-user-component-id-A1"
+            },
+            {
+                "Key": "system-change_ag_name",
+                "Value": "IX-system-change_ag_name_A1"
+            },
+            {
+                "Key": "component-environment",
+                "Value": "S3-component-environment-A1"
+            },
+            {
+                "Key": "system-environment",
+                "Value": "S3-user-system-environment-A1"
+            }
+        ]
+    }
+}
