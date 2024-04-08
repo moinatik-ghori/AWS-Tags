@@ -6,7 +6,7 @@ dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table("mandatory_tags")
 
 mandatory_tags = {
-    "S3" : {
+    "s3" : {
         "A1" : {
             "tag1" : "val1",
             "tag2" : "val2",
@@ -18,7 +18,7 @@ mandatory_tags = {
             "tag6" : "val6"
         }
     },
-    "EC2" : {
+    "ec2" : {
         "B1" : {
             "tag7" : "val7",
             "tag8" : "val8",
