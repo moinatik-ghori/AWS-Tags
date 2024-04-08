@@ -8,26 +8,38 @@ table = dynamodb.Table("mandatory_tags")
 mandatory_tags = {
     "s3" : {
         "A1" : {
-            "tag1" : "val1",
-            "tag2" : "val2",
-            "tag3" : "val3"
+            "system-name"            : "IX-system-name_A1",
+            "system-lifecycle"       : "IX-system-lifecycle_A1",
+            "system-support_ag_name" : "IX-system-support_ag_name_A1",
+            "system-support_ag_id"   : "IX-system-support_ag_id_A1",
+            "system-change_ag_name"  : "IX-system-change_ag_name_A1",
+            "system-change_ag_id"    : "IX-system-change_ag_id_A1"
         },
         "A2" : {
-            "tag4" : "val4",
-            "tag5" : "val5",
-            "tag6" : "val6"
+            "system-name"            : "IX-system-name_A2",
+            "system-lifecycle"       : "IX-system-lifecycle_A2",
+            "system-support_ag_name" : "IX-system-support_ag_name_A2",
+            "system-support_ag_id"   : "IX-system-support_ag_id_A2",
+            "system-change_ag_name"  : "IX-system-change_ag_name_A2",
+            "system-change_ag_id"    : "IX-system-change_ag_id_A2"
         }
     },
     "ec2" : {
         "B1" : {
-            "tag7" : "val7",
-            "tag8" : "val8",
-            "tag9" : "val9"
+            "system-name"            : "IX-system-name_B1",
+            "system-lifecycle"       : "IX-system-lifecycle_B1",
+            "system-support_ag_name" : "IX-system-support_ag_name_B1",
+            "system-support_ag_id"   : "IX-system-support_ag_id_B1",
+            "system-change_ag_name"  : "IX-system-change_ag_name_B1",
+            "system-change_ag_id"    : "IX-system-change_ag_id_B1"
         },
-        "B1" : {
-            "tag10" : "val10",
-            "tag11" : "val11",
-            "tag12" : "val12"
+        "B2" : {
+            "system-name"            : "IX-system-name_B2",
+            "system-lifecycle"       : "IX-system-lifecycle_B2",
+            "system-support_ag_name" : "IX-system-support_ag_name_B2",
+            "system-support_ag_id"   : "IX-system-support_ag_id_B2",
+            "system-change_ag_name"  : "IX-system-change_ag_name_B2",
+            "system-change_ag_id"    : "IX-system-change_ag_id_B2"
         }
     }
 }

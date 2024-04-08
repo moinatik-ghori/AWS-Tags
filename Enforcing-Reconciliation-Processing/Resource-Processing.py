@@ -85,29 +85,35 @@ class ResourceDetails():
         except Exception as e:
             print(f"Error Loading while fetching User Tags from file: Error : {e}")
 
-    def validate_with_mandatory_tags(self,mandatory_tags,s3_tags):
+    def validate_with_mandatory_tags(self, leanIX_tags, s3_tags):
         print(f"Function: validate_with_mandatory_tags")
-        final_mandatory_tags = s3_tags.copy()
-        for mandatory_tag_key, mandatory_tag_value in mandatory_tags.items():
-            for s3_tag in final_mandatory_tags:
-                if s3_tag['Key'] == mandatory_tag_key:
-                    s3_tag['Value'] = mandatory_tag_value
+        ix_tags = s3_tags.copy()
+        for ix_key, ix_val in leanIX_tags.items():
+            for s3_tag in ix_tags:
+                if s3_tag['Key'] == ix_key:
+                    s3_tag['Value'] = ix_val
                     break
             else:
-                final_mandatory_tags.append({'Key' : mandatory_tag_key , 'Value' : mandatory_tag_value})
-        final_tag_dict = {tag['Key']:tag['Value'] for tag in final_mandatory_tags}
-        print(f"Final Tags: {final_tag_dict}")
-        return final_tag_dict
+                ix_tags.append({'Key' : ix_key , 'Value' : ix_val})
 
-    def tagging_enforcement_s3(self):
+        # Converting List type into Dictionary type
+        aggregated_tags = {tag['Key']:tag['Value'] for tag in ix_tags}
+        print(f"Final Tags: {aggregated_tags}")
 
-    def tagging_enforcement(self, res_type, res_id, final_tags):
+        return aggregated_tags
+
+    def tagging_reconciliation_s3(self, res_id, final_tags):
+        s3_client = boto3.client('s3')
+        tagging = {'TagSet': final_tags}
+        s3_client.put_bucket_tagging(Bucket=res_id, Tagging=tagging)
+        print(f"Tagging Enforcement for bucket {res_id} has been completed. ")
+
+    def tagging_reconciliation(self, res_type, res_id, final_tags):
         print(f"Function: tagging_enforcement : {res_id}")
         if res_type == "s3":
-            s3_client = boto3.client('s3')
-            tagging = {'TagSet':final_tags}
-            s3_client.put_bucket_tagging(Bucket=res_id, Tagging=tagging)
-            print(f"Tagging Enforcement for bucket {res_id} has been completed. ")
+            obj.tagging_reconciliation_s3(res_id, final_tags)
+
+
 
     def process_resource_type(self,res_type):
         if res_type == "s3":
@@ -126,50 +132,39 @@ class ResourceDetails():
         if s3_buckets:
             print(f"S3 Buckets Tags Reconciliation")
             for bucket in s3_buckets:
-                # Getting buckets Tags
+
+                # Getting S3 buckets Tags
                 print(f"Bucket Name : {bucket}")
                 s3_tags = obj.get_bucket_tags(bucket)
                 print(f"Existing Tags: {s3_tags}")
 
-                # Calling for User Defined Tags
+                # Getting User Defined Tags
                 user_defined_tags = obj.get_user_defined_tags("s3",bucket,"A1")
                 print(f"User Tags for bucket {bucket} are : {user_defined_tags}")
 
-                # Calling LeanIX function to get the Mandatory fields
-                mandatory_tags = obj.call_leanix("s3", bucket, "A1")
-                print(f"Mandatory Tags from LeanIX {mandatory_tags}")
+                # Getting LeanIX Automation-Tags
+                leanix_tags = obj.call_leanix("s3", bucket, "A1")
+                print(f"LeanIX Automation Provided Tags: {leanix_tags}")
 
-                # Validate if S3 Bucket has all the mandatory tags or not.
-                all_mandatory_tags = obj.validate_with_mandatory_tags(mandatory_tags, s3_tags)
-                print(f"All Mandatory Tags are : {all_mandatory_tags}")
+                # Validate if S3 Bucket has all the LeanIX tags or not.
+                aggregated_s3ix_tags = obj.validate_with_mandatory_tags(leanix_tags, s3_tags)
+                print(f"All Mandatory Tags are : {aggregated_s3ix_tags}")
 
-                #final_tags = user_defined_tags.copy()
-                #final_tags.update(all_mandatory_tags)
 
-                final_tags = {**all_mandatory_tags, **user_defined_tags}
+                all_tags = {**aggregated_s3ix_tags, **user_defined_tags}
+
+                # Converting Dictionary type into List type
+                final_tags = [{'Key':key, 'Value':value} for key,value in all_tags.items()]
                 print(f"Final All Mandatory Tags and User Defined Tags : {final_tags}")
 
                 # Final Enforcing the all the mandatory tags to resource
-                obj.tagging_enforcement("s3", bucket, final_tags)
+                obj.tagging_reconciliation("s3", bucket, final_tags)
 
 
 if __name__ == "__main__":
     obj = ResourceDetails()
-    print("1. S3 Tag Enforcement and Reconciliation\n"
-          "2. EC2 Tag Enforcement and Reconciliation\n"
-          "3. RDS Tag Enforcement and Reconciliation\n"
-          "4. Exit")
+    obj.process_resource_type("s3")
 
-    choice = input("Enter your choice: ")
-
-    if choice == '1':
-        obj.process_resource_type("s3")
-    elif choice == '2':
-        obj.process_resource_type("ec2")
-    elif choice == '3':
-        obj.process_resource_type("rds")
-    else:
-        print(f"Invalid Choise, Try Again")
 
 
 
