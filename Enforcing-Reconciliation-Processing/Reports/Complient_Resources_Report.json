@@ -1,0 +1,10 @@
+{
+    "s3": {
+        "my-first-bucket-for-tagging-enforcement": "Complient",
+        "my-first-bucket-for-tagging-enforcement-with-tag": "Complient"
+    },
+    "lambda": {
+        "TagsEnforcementLambda": "Complient",
+        "lambda-function-1": "Complient"
+    }
+}
