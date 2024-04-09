@@ -2,10 +2,8 @@ from flask import Flask, request, jsonify
 import boto3
 
 app = Flask(__name__)
-dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table("mandatory_tags")
 
-mandatory_tags = {
+automation_tags = {
     "s3" : {
         "A1" : {
             "system-name"            : "IX-system-name_A1",
@@ -24,7 +22,7 @@ mandatory_tags = {
             "system-change_ag_id"    : "IX-system-change_ag_id_A2"
         }
     },
-    "ec2" : {
+    "lambda" : {
         "B1" : {
             "system-name"            : "IX-system-name_B1",
             "system-lifecycle"       : "IX-system-lifecycle_B1",
@@ -50,8 +48,8 @@ def get_tags():
     resource_type = request.args.get('resource_type')
     account_id = request.args.get('account_id')
 
-    if (resource_type in mandatory_tags) and (account_id in mandatory_tags[resource_type]):
-        return jsonify(mandatory_tags[resource_type][account_id])
+    if (resource_type in automation_tags) and (account_id in automation_tags[resource_type]):
+        return jsonify(automation_tags[resource_type][account_id])
     else:
         return jsonify("Error: Combination of Resource ID and Account ID not found"), 404
 

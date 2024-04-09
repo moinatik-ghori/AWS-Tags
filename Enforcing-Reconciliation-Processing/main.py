@@ -2,9 +2,9 @@ import boto3
 import json
 import requests
 from botocore.exceptions import ClientError
+from s3_processing import S3Processing
+from lambda_processing import LambdaProcessing
 import logging
-
-
 class ResourceDetails():
     def __init__(self):
         self.user_tags = {}
@@ -216,8 +216,14 @@ class ResourceDetails():
 
 if __name__ == "__main__":
     obj = ResourceDetails()
-    obj.process_resource_type("s3")
-    obj.process_resource_type("lambda")
+    #obj.process_resource_type("s3")
+    #obj.process_resource_type("lambda")
+
+    s3Obj = S3Processing()
+    s3Obj.s3_processing("s3")
+
+    lambdaObj = LambdaProcessing()
+    lambdaObj.lambda_processing("lambda")
 
 
 

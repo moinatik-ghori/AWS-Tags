@@ -14,18 +14,18 @@
                 "component-environment": "S3-component-environment-A2"
             }
         },
-        "ec2": {
+        "lambda": {
           "B1": {
-                "system-apm_id": "EC2-system-apm_id-B1",
-                "system-environment": "EC2-user-system-environment-B1",
-                "component-component_id": "EC2-user-component-id-B1",
-                "component-environment": "EC2-component-environment-B1"
+                "system-apm_id": "Lambda-system-apm_id-B1",
+                "system-environment": "Lambda-user-system-environment-B1",
+                "component-component_id": "Lambda-user-component-id-B1",
+                "component-environment": "Lambda-component-environment-B1"
             },
             "B2": {
-                "system-apm_id": "EC2-system-apm_id-B2",
-                "system-environment": "EC2-user-system-environment-B2",
-                "component-component_id": "EC2-user-component-id-B2",
-                "component-environment": "EC2-component-environment-B2"
+                "system-apm_id": "Lambda-system-apm_id-B2",
+                "system-environment": "Lambda-user-system-environment-B2",
+                "component-component_id": "Lambda-user-component-id-B2",
+                "component-environment": "Lambda-component-environment-B2"
             }
         }
     }
